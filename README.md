@@ -230,7 +230,7 @@ What's particular to a specific application?
   * What events trigger a dispatch method
   * How our state should change in response to different actions being dispatched.  
 
-These are all implemented outside of our `createStore method`. What is generic to each application following this pattern?
+These are all implemented outside of our `createStore` method. What is generic to each application following this pattern?
 
   * That a call to `dispatch` should call a reducer, reassign the state, and render a change.
 
