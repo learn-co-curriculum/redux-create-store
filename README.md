@@ -157,7 +157,7 @@ function dispatch(action) {
 };
 ```
 
-Notice, however, that we did not move the `changeCount` reducer into the createStore function. Take a look at it. This code is particular to our application. 
+Notice, however, that we did not move the `changeCount` reducer into the `createStore` function. Take a look at it. This code is particular to our application. 
 
 ```javascript
 function changeCount(state = { count: 0 }, action) {
