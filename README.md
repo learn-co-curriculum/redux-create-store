@@ -88,7 +88,7 @@ function() {
 
 > Note: You may notice that in the above code we made a *closure*. As you surely remember a JavaScript function has access to all the variables that were in scope at the time of its definition. This feature is called a closure since a function encloses or draws a protective bubble around the variables in its scope and carries those with it when invoked later.
 
-As you see above, `dispatch` is now private to our new function. But we'll need to call the function when certain events happen in our application (eg. when a user clicks on a button, call dispatch). So we expose the method by having our function return a JavaScript object that has a `dispatch` method. We'll call this returned JavaScript object our **store**, and therefore we'll call the method `createStore`, because that's what it does.
+As you see above, `dispatch` is now private to our new function. But we'll need to call the function when certain events happen in our application (eg. when a user clicks on a button, call dispatch). So we expose the method by having our function return a JavaScript object that has a `dispatch` method. We'll call this returned JavaScript object our **store**, and, therefore, we'll call the method `createStore`, because that's what it does.
 
 ```javascript
 function createStore() {
