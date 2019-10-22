@@ -6,9 +6,9 @@ In this lesson, we will learn how to turn our code into a library that can be
 used across JavaScript applications. By the end of the lesson you will be able
 to:
 
-* Understand which part of our codebase can be used across applications.
-* Understand how to encapsulate the functions we built.
-* Learn about the `getState` method and how it works.
+- Understand which part of our codebase can be used across applications.
+- Understand how to encapsulate the functions we built.
+- Learn about the `getState` method and how it works.
 
 Use `js/reducer.js` to follow along. Open `index.html` to try out the code.
 
@@ -21,30 +21,30 @@ let state;
 
 function reducer(state = { count: 0 }, action) {
   switch (action.type) {
-    case 'INCREASE_COUNT':
+    case "INCREASE_COUNT":
       return { count: state.count + 1 };
 
     default:
       return state;
   }
-};
+}
 
-function dispatch(action){
+function dispatch(action) {
   state = reducer(state, action);
   render();
-};
+}
 
 function render() {
-  let container = document.getElementById('container');
+  let container = document.getElementById("container");
   container.textContent = state.count;
-};
+}
 
-dispatch({ type: '@@INIT' })
-let button = document.getElementById('button');
+dispatch({ type: "@@INIT" });
+let button = document.getElementById("button");
 
-button.addEventListener('click', () => {
-    dispatch({ type: 'INCREASE_COUNT' });
-})
+button.addEventListener("click", () => {
+  dispatch({ type: "INCREASE_COUNT" });
+});
 ```
 
 See that `state` variable state all the way at the top of our code? Remember,
@@ -82,8 +82,8 @@ section.
 ## Move Code Common to Every JavaScript Application Inside Our New Function
 
 We ultimately want our new function to become a function that all of our
-applications following the __Redux__ pattern can use. To decide what our new
-function should be able to do, let's go back to our __Redux__ fundamentals.
+applications following the **Redux** pattern can use. To decide what our new
+function should be able to do, let's go back to our **Redux** fundamentals.
 
 `Action -> Reducer -> New State.`
 
@@ -104,11 +104,11 @@ function() {
 }
 ```
 
-> Note: You may notice that in the above code we made a *closure*. As you surely
-remember a JavaScript function has access to all the variables that were in
-scope at the time of its definition. This feature is called a closure since a
-function encloses or draws a protective bubble around the variables in its scope
-and carries those with it when invoked later.
+> Note: You may notice that in the above code we made a _closure_. As you surely
+> remember a JavaScript function has access to all the variables that were in
+> scope at the time of its definition. This feature is called a closure since a
+> function encloses or draws a protective bubble around the variables in its scope
+> and carries those with it when invoked later.
 
 As you see above, `dispatch` is now private to our new function. But we'll need
 to call the function when certain events happen in our application (eg. when a
@@ -124,10 +124,10 @@ function createStore() {
   function dispatch(action) {
     state = reducer(state, action);
     render();
-  };
+  }
 
   return { dispatch };
-};
+}
 ```
 
 This code almost works. Call `createStore`, and set the returned store equal to
@@ -137,7 +137,7 @@ following manner.
 
 ```javascript
 let store = createStore();
-store.dispatch({ type: '@@INIT' });
+store.dispatch({ type: "@@INIT" });
 ```
 
 So we have this object called a store which contains all of our application's
@@ -163,26 +163,26 @@ function createStore() {
     dispatch,
     getState
   };
-};
+}
 ```
 
 Now we can get our code working by changing render to the following:
 
 ```javascript
 function render() {
-  let container = document.getElementById('container');
+  let container = document.getElementById("container");
   container.textContent = store.getState().count;
-};
+}
 ```
 
 ...and then updating our button event listener to use `store.dispatch`:
 
 ```js
-let button = document.getElementById('button');
+let button = document.getElementById("button");
 
-button.addEventListener('click', () => {
-    store.dispatch({ type: 'INCREASE_COUNT' });
-})
+button.addEventListener("click", () => {
+  store.dispatch({ type: "INCREASE_COUNT" });
+});
 ```
 
 All in all, with these changes, the code should look like the following:
@@ -204,30 +204,30 @@ function createStore() {
     dispatch,
     getState
   };
-};
+}
 
 function reducer(state = { count: 0 }, action) {
   switch (action.type) {
-    case 'INCREASE_COUNT':
+    case "INCREASE_COUNT":
       return { count: state.count + 1 };
 
     default:
       return state;
   }
-};
+}
 
 function render() {
-  let container = document.getElementById('container');
+  let container = document.getElementById("container");
   container.textContent = store.getState().count;
-};
+}
 
 let store = createStore();
-store.dispatch({ type: '@@INIT' });
-let button = document.getElementById('button');
+store.dispatch({ type: "@@INIT" });
+let button = document.getElementById("button");
 
-button.addEventListener('click', () => {
-    store.dispatch({ type: 'INCREASE_COUNT' });
-})
+button.addEventListener("click", () => {
+  store.dispatch({ type: "INCREASE_COUNT" });
+});
 ```
 
 Our code is back to working. And it looks like we have a function called
@@ -235,7 +235,7 @@ Our code is back to working. And it looks like we have a function called
 
 ## Abstract away the reducer
 
-We know that __Redux__ works by having an action dispatched, which calls a
+We know that **Redux** works by having an action dispatched, which calls a
 reducer, and then renders the view. Our `createStore`'s dispatch method does
 that.
 
@@ -243,7 +243,7 @@ that.
 function dispatch(action) {
   state = reducer(state, action);
   render();
-};
+}
 ```
 
 Notice, however, that we did not move the `reducer` function into the
@@ -253,13 +253,13 @@ application.
 ```javascript
 function reducer(state = { count: 0 }, action) {
   switch (action.type) {
-    case 'INCREASE_COUNT':
+    case "INCREASE_COUNT":
       return { count: state.count + 1 };
 
     default:
       return state;
   }
-};
+}
 ```
 
 We happen to have an application that increases a count. But we can imagine
@@ -282,17 +282,17 @@ function createStore(reducer) {
 
   function getState() {
     return state;
-  };
+  }
 
   return {
     dispatch,
     getState
   };
-};
+}
 
 function reducer(state = { count: 0 }, action) {
   switch (action.type) {
-    case 'INCREASE_COUNT':
+    case "INCREASE_COUNT":
       return { count: state.count + 1 };
 
     default:
@@ -300,18 +300,17 @@ function reducer(state = { count: 0 }, action) {
   }
 }
 
-
 function render() {
-  let container = document.getElementById('container');
+  let container = document.getElementById("container");
   container.textContent = store.getState().count;
-};
+}
 
-let store = createStore(reducer) // createStore takes the reducer reducer as an argument
-store.dispatch({ type: '@@INIT' });
-let button = document.getElementById('button');
+let store = createStore(reducer); // createStore takes the reducer reducer as an argument
+store.dispatch({ type: "@@INIT" });
+let button = document.getElementById("button");
 
-button.addEventListener('click', () => {
-  store.dispatch({ type: 'INCREASE_COUNT' });
+button.addEventListener("click", () => {
+  store.dispatch({ type: "INCREASE_COUNT" });
 });
 ```
 
@@ -323,7 +322,7 @@ reducer that we passed through when creating the store.
 
 With this set up, we've got a fully functional `store`, that encapsulates our
 state and provides a controlled way to write (`dispatch`) and retrieve
-(`getState`) information.  
+(`getState`) information.
 
 Every piece of code that would be common to any JavaScript application following
 this pattern is wrapped inside of the `createStore` function. Any code that is
@@ -331,14 +330,14 @@ particular to our application is outside that function.
 
 What's particular to a specific application?
 
-* How the DOM is updated in our `render` function
-* What events trigger a dispatch method
-* How our state should change in response to different actions being dispatched.  
+- How the DOM is updated in our `render` function
+- What events trigger a dispatch method
+- How our state should change in response to different actions being dispatched.
 
 These are all implemented outside of our `createStore method`. What is generic
 to each application following this pattern?
 
-* That a call to `dispatch` should call a reducer, reassign the state, and render a change.
+- That a call to `dispatch` should call a reducer, reassign the state, and render a change.
 
 This is implemented inside the `createStore` method.
 
